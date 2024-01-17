@@ -15,6 +15,13 @@ const jwtPassword = 'secret';
  */
 function signJwt(username, password) {
     // Your code here
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(username);
+    if (!isValidEmail || password.length < 6) {
+        return null;
+    }
+    var token = jwt.sign({ username: username }, jwtPassword);
+        return token;
+
 }
 
 /**
@@ -27,6 +34,14 @@ function signJwt(username, password) {
  */
 function verifyJwt(token) {
     // Your code here
+    try{
+        const verifiedToken = jwt.verify(token,jwtPassword);
+        return true;
+    }
+    catch(error){
+        return false;
+    
+    }
 }
 
 /**
@@ -37,7 +52,14 @@ function verifyJwt(token) {
  *                         Returns false if the token is not a valid JWT format.
  */
 function decodeJwt(token) {
-    // Your code here
+    try{
+        const decodeToken=jwt.decode(token);
+        return decodeToken !== null;
+    }
+    catch(error){
+        return false;
+    }
+
 }
 
 
